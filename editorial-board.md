@@ -1,6 +1,7 @@
 ---
 title: "Editorial Board"
 layout: default
+permalink: /editorial-board.html
 ---
 
 # Editorial Board
