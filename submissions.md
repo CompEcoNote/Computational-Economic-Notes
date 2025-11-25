@@ -8,14 +8,10 @@ permalink: /submissions.html
 
 ## How to Submit
 
-### Option 1: GitHub Pull Request
+###  GitHub Pull Request
 1. Fork our repository
 2. Create your paper following our template
 3. Open a Pull Request
-
-### Option 2: Email Submission
-1. Prepare your manuscript
-2. Email to: zedtaha@gmail.com
 
 ## Required Information
 
