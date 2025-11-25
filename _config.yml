@@ -1,22 +1,8 @@
 title: "Computational Economic Notes"
-email: zedtaha@gmail.com
-description: "A scientific journal website"
-baseurl: ""  # Change this to empty
+baseurl: "/Computational-Economic-Notes"
 url: "https://compeconote.github.io"
+theme: jekyll-theme-minimal
 
-theme: jekyll-theme-minimal  # Use a supported theme
-
-markdown: kramdown
-
-# Collections configuration
 collections:
   papers:
     output: true
-    permalink: /papers/:path/
-
-# Defaults
-defaults:
-  - scope:
-      path: ""
-    values:
-      layout: "default"
