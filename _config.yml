@@ -1,70 +1,16 @@
-title: "Computational Economic Note"
-description: "An open-access scholarly journal hosted on GitHub Pages."
-baseurl: "/Computational_Economic_Notes" # change or remove if using org.github.io root
-url: "https://compeconote.github.io/Computational_Economic_Notes/"
-theme: jekyll-theme-slate
+title: "Computational Economic Notes"
+email: zedtaha@gmail.com
+description: "A scientific journal website"
+baseurl: "" 
+url: "https://tahazaghdoudi.github.io"  
+
+theme: minima
+
 markdown: kramdown
 plugins:
-- jekyll-feed
+  - jekyll-feed
 
-
-# Navigation (used by the default layout)
-navigation:
-- title: Home
-url: /
-- title: About
-url: /about
-- title: Submissions
-url: /submissions
-- title: Editorial Board
-url: /editorial-board
-
-
-# Optional: Add social / contact
-contact_email: "zedtaha@gmail.com"
-
-
-# Defaults for pages
 collections:
-papers:
-output: true
-
----
-
-
-### `_layouts/default.html`
-
-
-```html
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ page.title | default: site.title }}</title>
-<link rel="stylesheet" href="/assets/style.css">
-</head>
-<body>
-<header>
-<img src="/assets/logo.png" alt="Journal logo" style="height:60px;">
-<h1><a href="{{ site.baseurl }}/">{{ site.title }}</a></h1>
-<p>{{ site.description }}</p>
-<nav>
-<ul>
-{% for item in site.navigation %}
-<li><a href="{{ item.url }}">{{ item.title }}</a></li>
-{% endfor %}
-</ul>
-</nav>
-<hr/>
-</header>
-<main>
-{{ content }}
-</main>
-<footer>
-<hr/>
-<p>Contact: <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
-<p>&copy; {{ "now" | date: "%Y" }} {{ site.title }}</p>
-</footer>
-</body>
-</html>
+  journal:
+    output: true
+    permalink: /journal/:name
