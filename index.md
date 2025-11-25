@@ -9,12 +9,12 @@ layout: default
 
 ## Latest articles
 
-- [2025 — Paper 001](/papers/2025/paper-001/)
+- [2025 — Paper 001](/Computational-Economic-Notes/papers/2025/paper-001/)
 
 ## How to submit
 
-See [Submission Guidelines](/submissions).
+See [Submission Guidelines](/Computational-Economic-Notes/submissions).
 
 ## Editorial Board
 
-See [Editorial Board](/editorial-board).
+See [Editorial Board](/Computational-Economic-Notes/editorial-board).
