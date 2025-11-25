@@ -1,0 +1,40 @@
+name: Build site
+
+
+on:
+push:
+branches: [ main ]
+workflow_dispatch:
+
+
+jobs:
+build:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v4
+
+
+- name: Set up Ruby
+uses: ruby/setup-ruby@v1
+with:
+ruby-version: '3.1'
+
+
+- name: Install Bundler and Jekyll
+run: |
+gem install bundler
+bundle init || true
+echo "gem 'jekyll'" >> Gemfile
+echo "gem 'jekyll-feed'" >> Gemfile
+bundle install --jobs 4 --retry 3
+
+
+- name: Build the site
+run: bundle exec jekyll build --destination _site
+
+
+- name: Upload site artifact
+uses: actions/upload-artifact@v4
+with:
+name: site
+path: _site
