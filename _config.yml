@@ -4,21 +4,13 @@ description: "An open-access journal for computational economics research"
 baseurl: "/Computational-Economic-Notes"
 url: "https://compeconote.github.io"
 
-# Essential settings
 theme: minima
 markdown: kramdown
 permalink: pretty
 
-# Safe mode for GitHub Pages
-safe: true
-
-# Plugins (included in github-pages gem)
 plugins:
   - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
 
-# Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
