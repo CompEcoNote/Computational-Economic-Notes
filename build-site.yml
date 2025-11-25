@@ -1,0 +1,35 @@
+name: Build site
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1'
+
+    - name: Install dependencies
+      run: |
+        gem install bundler jekyll
+        bundle init
+        echo "gem 'jekyll'" >> Gemfile
+        echo "gem 'jekyll-feed'" >> Gemfile
+        echo "gem 'minima'" >> Gemfile
+        bundle install
+
+    - name: Build the site
+      run: bundle exec jekyll build --destination _site
+
+    - name: Upload site artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: site
+        path: _site
