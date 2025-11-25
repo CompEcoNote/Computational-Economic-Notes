@@ -1,8 +1,8 @@
 title: "Computational Economic Notes"
 email: zedtaha@gmail.com
 description: "A scientific journal website"
-baseurl: "" 
-url: "url: "https://compeconote.github.io""  
+baseurl: "/Computational-Economic-Notes"
+url: "https://compeconote.github.io"
 
 theme: minima
 
@@ -15,18 +15,10 @@ collections:
   papers:
     output: true
     permalink: /papers/:path/
-  submissions:
-    output: true
 
 # Defaults
 defaults:
   - scope:
       path: ""
-      type: "papers"
-    values:
-      layout: "default"
-  - scope:
-      path: ""
-      type: "submissions"
     values:
       layout: "default"
