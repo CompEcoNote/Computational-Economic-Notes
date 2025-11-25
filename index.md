@@ -12,7 +12,7 @@ layout: default
 
 - [About](about.html)
 - [Editorial Board](editorial-board.html)  
-- [Submission Guidelines](submissions.html)
+- [Submission Guidelines](submission.html)
 - [Latest Papers](papers/2025/paper-001/)
 
 
