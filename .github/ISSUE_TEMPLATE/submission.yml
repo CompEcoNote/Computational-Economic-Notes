@@ -1,0 +1,57 @@
+name: Paper Submission
+description: Submit a new paper to Computational Economic Notes
+title: "[Submission]: "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting to Computational Economic Notes!
+        
+  - type: input
+    id: title
+    attributes:
+      label: Paper Title
+      placeholder: "Enter paper title"
+    validations:
+      required: true
+      
+  - type: input
+    id: authors
+    attributes:
+      label: Author(s)
+      placeholder: "Name, Affiliation, Email"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: abstract
+    attributes:
+      label: Abstract
+      placeholder: "Enter abstract (250 words max)"
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - "Research Note"
+        - "Methodology"
+        - "Application"
+        - "Review"
+    validations:
+      required: true
+      
+  - type: input
+    id: repository
+    attributes:
+      label: Code Repository URL
+      placeholder: "https://github.com/username/repo"
+      
+  - type: textarea
+    id: comments
+    attributes:
+      label: Additional Comments
+      placeholder: "Any additional information for editors"
