@@ -4,101 +4,41 @@ title: Submit Your Paper
 permalink: /submission/
 ---
 
-<div class="submission-page">
-    <h1>Submit to Computational Economic Notes</h1>
-    
-    <div class="submission-options">
-        <div class="option-card">
-            <h3>📝 Standard Submission</h3>
-            <p>Submit your complete paper through our GitHub-based system</p>
-            <a href="https://github.com/CompEcoNote/Computational-Economic-Notes/issues/new?template=submission.yml" class="btn btn-primary">Submit via GitHub</a>
-        </div>
-        
-        <div class="option-card">
-            <h3>💡 Pre-submission Inquiry</h3>
-            <p>Not sure if your paper fits? Start a discussion first</p>
-            <a href="https://github.com/CompEcoNote/Computational-Economic-Notes/discussions" class="btn btn-secondary">Start Discussion</a>
-        </div>
-    </div>
+# Submit to Computational Economic Notes
 
-    <h2>Submission Guidelines</h2>
-    
-    <div class="guidelines">
-        <h3>📋 Requirements</h3>
-        <ul>
-            <li>Open source code (GitHub repository)</li>
-            <li>Reproducible computational results</li>
-            <li>Clear documentation</li>
-            <li>MIT license or similar open license</li>
-        </ul>
-        
-        <h3>⏱️ Process</h3>
-        <ul>
-            <li><strong>Initial screening:</strong> 1 week</li>
-            <li><strong>Peer review:</strong> 2-4 weeks</li>
-            <li><strong>Open discussion:</strong> Community feedback</li>
-            <li><strong>Final decision:</strong> Editorial review</li>
-        </ul>
-    </div>
+## Quick Submission
 
-    <div class="cta-section">
-        <h2>Ready to Submit?</h2>
-        <a href="https://github.com/CompEcoNote/Computational-Economic-Notes/issues/new?template=submission.yml" class="cta-button">
-            🚀 Start Submission Process
-        </a>
-    </div>
-</div>
+[**Submit Paper via GitHub**](https://github.com/CompEcoNote/Computational-Economic-Notes/issues/new?template=submission.yml)
 
-<style>
-.submission-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-}
+## Submission Guidelines
 
-.option-card {
-    border: 1px solid #ddd;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-}
+### What We Publish
+- Research notes (2000-5000 words)
+- Methodology papers  
+- Application case studies
+- Software/tool introductions
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 10px 0;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
+### Requirements
+- Open source code (GitHub repository)
+- Reproducible computational results
+- Clear documentation
+- MIT or similar open license
 
-.btn-primary {
-    background: #e74c3c;
-    color: white;
-}
+### Review Process
+1. **Initial screening** (1 week)
+2. **Peer review** (2-4 weeks)
+3. **Revision period** 
+4. **Final acceptance**
 
-.btn-secondary {
-    background: #3498db;
-    color: white;
-}
+## Ready to Submit?
 
-.cta-button {
-    display: inline-block;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    padding: 15px 40px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 2rem 0;
-}
+[**Start Submission Process**](https://github.com/CompEcoNote/Computational-Economic-Notes/issues/new?template=submission.yml)
 
-.guidelines {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 8px;
-    margin: 2rem 0;
-}
-</style>
+---
+
+### Alternative Submission Methods
+
+- **Pre-submission inquiry**: [Start a Discussion](https://github.com/CompEcoNote/Computational-Economic-Notes/discussions)
+- **Questions?**: Open an [Issue](https://github.com/CompEcoNote/Computational-Economic-Notes/issues)
+
+*All submissions are publicly visible and undergo open peer review.*
