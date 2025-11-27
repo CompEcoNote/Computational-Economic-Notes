@@ -1,0 +1,39 @@
+name: Notify Editors of New Submission
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'submission')
+    steps:
+      - name: Send notification
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const editors = ['editor1', 'editor2']; // Replace with actual editor usernames
+            
+            // Create comment to notify editors
+            const commentBody = `📢 New submission received!\n\n**Title:** ${issue.title}\n\n**Submitted by:** @${issue.user.login}\n\n**Assigned labels:** ${issue.labels.map(l => l.name).join(', ')}\n\n---\n\n**Editors:** ${editors.map(e => `@${e}`).join(' ')}\n\nPlease assign reviewers and update status.`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: commentBody
+            });
+            
+            // Assign to editorial team (optional)
+            try {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                assignees: editors
+              });
+            } catch (error) {
+              console.log('Could not assign editors:', error);
+            }
