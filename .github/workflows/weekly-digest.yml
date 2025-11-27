@@ -1,0 +1,35 @@
+name: Weekly Submission Digest
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate weekly digest
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'submission',
+              since: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+            });
+            
+            if (issues.length > 0) {
+              const digestBody = `# 📊 Weekly Submission Digest\n\n**New submissions this week:** ${issues.length}\n\n${issues.map(issue => `- [#${issue.number}](${issue.html_url}) - ${issue.title} (by @${issue.user.login})`).join('\n')}\n\n---\n\n**Action required:** Please review and assign reviewers for these submissions.`;
+              
+              // Create a discussion post with the digest
+              await github.rest.discussions.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `Weekly Submission Digest - ${new Date().toISOString().split('T')[0]}`,
+                body: digestBody,
+                category: 'announcements'
+              });
+            }
