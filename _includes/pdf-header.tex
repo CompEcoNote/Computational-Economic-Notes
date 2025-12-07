@@ -1,0 +1,54 @@
+% PDF Header for Computational Economic Notes
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+% Title formatting
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    showstringspaces=false
+}
+
+% Page header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\it Computational Economic Notes}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+% Line spacing
+\onehalfspacing
+
+% Custom title command
+\renewcommand{\maketitle}{
+    \begin{center}
+        {\LARGE \bfseries \@title}\\[1em]
+        {\large \@author}\\[1em]
+        {\@date}\\[2em]
+    \end{center}
+}
