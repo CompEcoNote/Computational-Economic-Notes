@@ -1,0 +1,66 @@
+name: Generate PDFs for Papers
+
+on:
+  push:
+    paths:
+      - 'papers/**/*.md'
+      - '!papers/**/*.pdf'  # Don't trigger on PDF changes
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  generate-pdfs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper linking
+          
+      - name: Setup LaTeX and Pandoc
+        uses: xu-cheng/latex-action@v3
+        with:
+          run: |
+            apt-get update
+            apt-get install -y pandoc pandoc-citeproc
+          
+      - name: Generate PDFs
+        run: |
+          # Create PDF directory if it doesn't exist
+          mkdir -p papers/2025/paper-001/pdf/
+          
+          # Generate PDF from markdown
+          cd papers/2025/paper-001
+          pandoc paper.md \
+            -o pdf/paper.pdf \
+            --pdf-engine=xelatex \
+            -V geometry:margin=1in \
+            -V papersize:a4 \
+            -V fontsize:12pt \
+            -V linkcolor:blue \
+            -V urlcolor:blue \
+            -V toccolor:blue \
+            --toc \
+            --number-sections \
+            -H ../../_includes/pdf-header.tex \
+            --highlight-style pygments
+          
+          echo "✅ PDF generated at papers/2025/paper-001/pdf/paper.pdf"
+          
+      - name: Commit and push PDFs
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Add only PDF files
+          git add papers/**/*.pdf
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No PDF changes to commit"
+          else
+            git commit -m "📄 Auto-generated PDFs from markdown [skip ci]"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
