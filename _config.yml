@@ -117,3 +117,22 @@ exclude:
 include:
   - _assets
   - _data
+  # Add these to your existing _config.yml
+
+# Paper collections
+collections:
+  papers:
+    output: true
+    permalink: /papers/:path/
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "papers"
+    values:
+      layout: "paper-simple"
+      author: "Various Authors"
+
+# Site variables
+paper_reviewers: ["reviewer1", "reviewer2", "reviewer3"]  # Add actual usernames
