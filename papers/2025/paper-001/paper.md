@@ -1,5 +1,3 @@
-
-### 2. `_papers/2025/paper-001/paper.md`
 ```markdown
 ---
 title: "An Example Paper in Computational Economics"
@@ -74,5 +72,6 @@ This being a template paper, the results are for demonstration purposes only.
 Future work could extend these formatting guidelines to include more complex computational methods.
 
 # References
+
 
 Include a `references.bib` file in the same folder and cite using Pandoc style: [@smith2020]
