@@ -1,0 +1,175 @@
+name: Publish Accepted Paper
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  check-approvals:
+    if: contains(github.event.issue.labels.*.name, 'under-review')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    outputs:
+      approved: ${{ steps.check.outputs.approved }}
+    steps:
+      - name: Check for 2 approvals
+        id: check
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const allComments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber
+            });
+            
+            // Find unique reviewers who approved
+            const approvals = new Set();
+            for (const comment of allComments.data) {
+              const text = comment.body.toLowerCase();
+              if (text.includes('approved') || text.includes('lgtm') || text.includes('✅')) {
+                approvals.add(comment.user.login);
+              }
+            }
+            
+            if (approvals.size >= 2) {
+              console.log(`✅ 2 approvals found from: ${Array.from(approvals).join(', ')}`);
+              core.setOutput('approved', 'true');
+              
+              // Get repo URL from issue body
+              const issue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber
+              });
+              
+              const body = issue.data.body;
+              const repoMatch = body.match(/Repository URL:\s*(https:\/\/github\.com\/[^\s]+)/i);
+              if (repoMatch) {
+                core.setOutput('repo_url', repoMatch[1]);
+              }
+            }
+
+  generate-pdf:
+    needs: check-approvals
+    if: needs.check-approvals.outputs.approved == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          run: |
+            apt-get update
+            apt-get install -y pandoc texlive-fonts-extra
+            
+      - name: Extract paper info
+        id: paper-info
+        run: |
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          PAPER_DIR="papers/$ISSUE_NUMBER"
+          mkdir -p $PAPER_DIR
+          
+          # Get title from issue
+          TITLE="${{ github.event.issue.title }}"
+          TITLE="${TITLE#New Paper: }"
+          echo "paper_title=$TITLE" >> $GITHUB_OUTPUT
+          echo "paper_dir=$PAPER_DIR" >> $GITHUB_OUTPUT
+          
+          # Create simple index.md
+          cat > $PAPER_DIR/index.md << EOF
+          ---
+          layout: paper-simple
+          title: "$TITLE"
+          paper_id: "$ISSUE_NUMBER"
+          date: "$(date +'%Y-%m-%d')"
+          ---
+          
+          ## Abstract
+          Paper PDF is available for download below.
+          
+          *Published via Computational Economic Notes*
+          EOF
+
+      - name: Create placeholder PDF (for now)
+        run: |
+          PAPER_DIR="${{ steps.paper-info.outputs.paper_dir }}"
+          TITLE="${{ steps.paper-info.outputs.paper_title }}"
+          
+          # Create a simple PDF with paper info
+          cat > /tmp/paper.tex << EOF
+          \documentclass{article}
+          \usepackage{hyperref}
+          \usepackage[margin=1in]{geometry}
+          
+          \title{$TITLE}
+          \author{Computational Economic Notes}
+          \date{Published: \today}
+          
+          \begin{document}
+          \maketitle
+          
+          \section*{Note}
+          This paper was reviewed and approved via GitHub Issues.
+          The original source is available in the author's repository.
+          
+          \section*{Paper Information}
+          \begin{itemize}
+            \item \textbf{Paper ID:} ${{ github.event.issue.number }}
+            \item \textbf{Review Issue:} \url{https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}}
+            \item \textbf{Published:} \today
+          \end{itemize}
+          
+          \vfill
+          \centering
+          \textit{Computational Economic Notes}
+          \end{document}
+          EOF
+          
+          pdflatex -output-directory=$PAPER_DIR /tmp/paper.tex
+          mv $PAPER_DIR/paper.pdf $PAPER_DIR/paper.pdf
+
+      - name: Commit and publish
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          git add papers/
+          git commit -m "📄 Publish paper ${{ github.event.issue.number }}"
+          git push
+          
+      - name: Update issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = context.issue.number;
+            const paperUrl = `https://compEcoNote.github.io/Computational-Economic-Notes/papers/${issueNumber}/`;
+            
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: ['published']
+            });
+            
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              name: 'under-review'
+            });
+            
+            const comment = `## 🎉 Paper Published!\n\n✅ **Paper has been published!**\n\n📄 **Download PDF:** [paper.pdf](${paperUrl}paper.pdf)\n🌐 **View Page:** [${paperUrl}](${paperUrl})\n\nThank you to the reviewers and author!\n\n*This paper is now officially published in Computational Economic Notes.*`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: comment
+            });
