@@ -11,32 +11,46 @@ layout: default
       {% endif %}
       • {{ page.date | date: "%B %d, %Y" }}
       
-      {% comment %} Find PDF path {% endcomment %}
+      {% comment %} Review Status Badge {% endcomment %}
       {% assign paper_id = page.id | split: '/' | last %}
-      {% assign year = page.url | split: '/' | slice: 2, 1 | first %}
-      {% assign pdf_path = '/papers/' | append: year | append: '/' | append: paper_id | append: '/pdf/paper.pdf' %}
-      
-      {% comment %} Check if PDF exists {% endcomment %}
-      {% assign pdf_exists = false %}
-      {% for static_file in site.static_files %}
-        {% if static_file.path == pdf_path %}
-          {% assign pdf_exists = true %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
-      
-      {% if pdf_exists %}
-        • <a href="{{ pdf_path | relative_url }}" class="pdf-download" target="_blank">
-            <i class="fas fa-file-pdf"></i> Download PDF
-          </a>
-        • <a href="{{ pdf_path | relative_url }}" class="pdf-view" target="_blank">
-            <i class="fas fa-eye"></i> View PDF
-          </a>
+      {% if site.data.reviews[paper_id] %}
+        {% assign review = site.data.reviews[paper_id] %}
+        <span class="review-status {{ review.status }}">
+          {{ review.status | capitalize }}
+        </span>
       {% endif %}
     </p>
+    
+    {% comment %} Review Links {% endcomment %}
+    <div class="review-links">
+      <a href="https://github.com/{{ site.github.repository_nwo }}/compare/main...paper-{{ paper_id }}" 
+         class="btn btn-review" target="_blank">
+         📝 Submit Revision
+      </a>
+      <a href="https://github.com/{{ site.github.repository_nwo }}/issues/new?template=review.md&title=Review: {{ page.title | url_encode }}&labels=review" 
+         class="btn btn-review" target="_blank">
+         🔍 Submit Review
+      </a>
+    </div>
   </header>
 
   <div class="post-content">
     {{ content }}
   </div>
-</article>{% endraw %}
+</article>
+
+{% comment %} Review Comments Section {% endcomment %}
+{% if site.data.reviews[paper_id] %}
+<div class="review-comments">
+  <h2>Review Comments</h2>
+  {% for comment in site.data.reviews[paper_id].comments %}
+    <div class="review-comment">
+      <strong>{{ comment.reviewer }}</strong>
+      <span class="review-date">{{ comment.date | date: "%B %d, %Y" }}</span>
+      <div class="review-content">
+        {{ comment.content | markdownify }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}{% endraw %}
