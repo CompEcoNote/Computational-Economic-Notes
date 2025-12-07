@@ -1,0 +1,33 @@
+name: Generate PDF from Markdown
+
+on:
+  push:
+    paths:
+      - 'papers/**/*.md'
+  workflow_dispatch:
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+          
+      - name: Generate PDFs
+        run: |
+          find papers -name "*.md" | while read md_file; do
+            pdf_file="${md_file%.md}.pdf"
+            pdf_dir=$(dirname "$pdf_file")
+            mkdir -p "$pdf_dir"
+            pandoc "$md_file" -o "$pdf_file" --template=eisvogel --listings
+          done
+          
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-pdfs
+          path: papers/**/*.pdf
