@@ -1,84 +1,22 @@
-# Site Information
+# Site settings
 title: "Computational Economic Notes"
-subtitle: "Open-Access Journal for Computational Economics"
-email: "zedtaha@gmail.com"
-description: "A peer-reviewed, open-access journal publishing cutting-edge research at the intersection of economics and computational methods"
-baseurl: "/Computational-Economic-Notes"
-url: "https://compeconote.github.io"
+description: "Simple computational economics papers"
+baseurl: "" # Leave empty for project pages
+url: "https://compeconote.github.io" # Your GitHub Pages URL
 repository: "CompEcoNote/Computational-Economic-Notes"
-twitter_username: "CompEcoNote"
-github_username: "CompEcoNote"
 
-# Advanced Theme Settings
-theme: jekyll-theme-cayman  # Professional academic theme
-
-# SEO Optimization
-plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-feed
-  - jekyll-paginate
-  - jekyll-archives
-
-# SEO Tag Configuration
-seo:
-  name: "Computational Economic Notes"
-  logo: "/assets/logo.png"
-  type: "Journal"
-  links:
-    - "https://github.com/CompEcoNote"
-    - "https://compeconote.github.io/Computational-Economic-Notes"
-
-# Sitemap Configuration
-sitemap:
-  file: "/sitemap.xml"
-  changefreq: "weekly"
-  priority: 0.7
-
-# Feed Configuration
-feed:
-  path: "atom.xml"
-  posts_limit: 10
-
-# Pagination
-paginate: 5
-paginate_path: "/page:num/"
-
-# Archives
-jekyll-archives:
-  enabled:
-    - categories
-    - tags
-  layout: "archive"
-  permalinks:
-    year: "/:year/"
-    month: "/:year/:month/"
-    day: "/:year/:month/:day/"
-    tag: "/tag/:name/"
-    category: "/category/:name/"
-
-# Markdown Processing
+# Build settings
 markdown: kramdown
-kramdown:
-  input: GFM
-  hard_wrap: false
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: 'highlight'
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
-      start_line: 1
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
 
 # Collections
 collections:
   papers:
     output: true
     permalink: /papers/:path/
-  issues:
-    output: true
-    permalink: /issues/:path/
 
 # Defaults
 defaults:
@@ -86,21 +24,21 @@ defaults:
       path: ""
       type: "papers"
     values:
-      layout: "paper"
-      toc: true
+      layout: "paper-simple"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
   - scope:
       path: ""
     values:
       layout: "default"
-      show_toc: true
-      read_time: true
 
-# Build Settings
-timezone: America/New_York
-future: false
-safe: true
+# Theme (using minima)
+theme: minima
 
-# Exclusions
+# Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -110,29 +48,3 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - .github/
-  - .gitignore
-  - README.md
-
-# Include custom assets
-include:
-  - _assets
-  - _data
-  # Add these to your existing _config.yml
-
-# Paper collections
-collections:
-  papers:
-    output: true
-    permalink: /papers/:path/
-
-# Default layouts
-defaults:
-  - scope:
-      path: ""
-      type: "papers"
-    values:
-      layout: "paper-simple"
-      author: "Various Authors"
-
-# Site variables
-paper_reviewers: ["reviewer1", "reviewer2", "reviewer3"]  # Add actual usernames
