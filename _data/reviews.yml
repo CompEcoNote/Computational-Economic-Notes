@@ -1,0 +1,15 @@
+# Review data for papers
+paper-001:
+  status: "under-review"  # under-review, accepted, revisions-requested, rejected
+  reviewers:
+    - name: "Reviewer 1"
+      affiliation: "University of Economics"
+      assigned: "2025-07-10"
+      completed: ""
+    - name: "Reviewer 2"
+      affiliation: "Computational Lab"
+      assigned: "2025-07-10"
+      completed: ""
+  comments: []
+  decision: ""
+  decision_date: ""
