@@ -111,3 +111,154 @@
     font-size: 11px;
   }
 }
+/* Paper styles */
+.paper-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.paper-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.paper-title {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.paper-meta {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    
+    div {
+        margin: 5px 0;
+    }
+}
+
+.paper-actions {
+    margin: 20px 0;
+    
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        
+        i {
+            margin-right: 5px;
+        }
+    }
+    
+    .btn-primary {
+        background: #28a745;
+        color: white;
+        
+        &:hover {
+            background: #218838;
+        }
+    }
+    
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+        
+        &:hover {
+            background: #545b62;
+        }
+    }
+}
+
+.paper-content {
+    line-height: 1.6;
+    font-size: 16px;
+    
+    h2 {
+        color: #2c3e50;
+        margin-top: 30px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+}
+
+.paper-footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    font-size: 14px;
+    
+    p {
+        margin: 10px 0;
+    }
+}
+
+/* Review form */
+.review-form {
+    background: #e9f7fe;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border-left: 4px solid #17a2b8;
+    
+    .review-links {
+        margin: 15px 0;
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 10px;
+            background: #17a2b8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            
+            &:hover {
+                background: #138496;
+            }
+        }
+    }
+    
+    .review-tips {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        margin-top: 15px;
+        
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+    }
+}
+
+/* Status badges */
+.issue-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+    
+    &.under-review {
+        background: #fff3cd;
+        color: #856404;
+    }
+    
+    &.published {
+        background: #d4edda;
+        color: #155724;
+    }
+}
