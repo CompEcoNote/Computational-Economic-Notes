@@ -1,0 +1,21 @@
+name: Paper Review Management
+
+on:
+  pull_request:
+    types: [labeled, opened]
+
+jobs:
+  assign-reviewers:
+    if: contains(github.event.pull_request.labels.*.name, 'review')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign to editor
+        run: |
+          # This can be customized to assign specific editors
+          echo "Paper review PR #${{ github.event.pull_request.number }} created"
+          
+      - name: Add to project board
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/CompEcoNote/Computational-Economic-Notes/projects/1
+          github-token: ${{ secrets.PROJECT_TOKEN }}
