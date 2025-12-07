@@ -1,0 +1,52 @@
+name: Assign Paper Reviewers
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  assign-reviewers:
+    if: contains(github.event.issue.labels.*.name, 'paper-submission')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Assign reviewers
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // List of potential reviewers (add actual GitHub usernames)
+            const reviewers = [
+              'github-user1',  // Replace with actual username
+              'github-user2',  // Replace with actual username
+              'github-user3'   // Replace with actual username
+            ];
+            
+            // Select 2 random reviewers
+            const shuffled = reviewers.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 2);
+            
+            // Add assignees
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: selected
+            });
+            
+            // Update labels
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['under-review']
+            });
+            
+            // Post welcome comment
+            const comment = `## 👋 Reviewers Assigned\n\n**Reviewers:** @${selected[0]} and @${selected[1]}\n\n**Please:**\n1. Review the paper in the linked repository\n2. Add your comments below\n3. Comment "APPROVED" when ready\n\n**Timeline:** 14 days for initial review\n\nSee [REVIEW_CHECKLIST.md](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/REVIEW_CHECKLIST.md) for guidance.`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
