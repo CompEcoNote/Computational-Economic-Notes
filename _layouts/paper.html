@@ -1,0 +1,42 @@
+{% raw %}---
+layout: default
+---
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">
+      {% if page.author %}
+        by {{ page.author }}
+      {% endif %}
+      • {{ page.date | date: "%B %d, %Y" }}
+      
+      {% comment %} Find PDF path {% endcomment %}
+      {% assign paper_id = page.id | split: '/' | last %}
+      {% assign year = page.url | split: '/' | slice: 2, 1 | first %}
+      {% assign pdf_path = '/papers/' | append: year | append: '/' | append: paper_id | append: '/pdf/paper.pdf' %}
+      
+      {% comment %} Check if PDF exists {% endcomment %}
+      {% assign pdf_exists = false %}
+      {% for static_file in site.static_files %}
+        {% if static_file.path == pdf_path %}
+          {% assign pdf_exists = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+      
+      {% if pdf_exists %}
+        • <a href="{{ pdf_path | relative_url }}" class="pdf-download" target="_blank">
+            <i class="fas fa-file-pdf"></i> Download PDF
+          </a>
+        • <a href="{{ pdf_path | relative_url }}" class="pdf-view" target="_blank">
+            <i class="fas fa-eye"></i> View PDF
+          </a>
+      {% endif %}
+    </p>
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>{% endraw %}
