@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include head.html %}
+<body>
+    {% include header.html %}
+    
+    <main class="paper-container">
+        <article class="paper">
+            <header class="paper-header">
+                <h1 class="paper-title">{{ page.title }}</h1>
+                
+                <div class="paper-meta">
+                    <div class="paper-id">
+                        <strong>Paper ID:</strong> {{ page.paper_id }}
+                    </div>
+                    <div class="paper-date">
+                        <strong>Published:</strong> {{ page.date | date: "%B %d, %Y" }}
+                    </div>
+                </div>
+                
+                <div class="paper-actions">
+                    <a href="{{ page.url }}paper.pdf" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                    <a href="https://github.com/CompEcoNote/Computational-Economic-Notes/issues/{{ page.paper_id }}" 
+                       class="btn btn-secondary" target="_blank">
+                        <i class="fas fa-comments"></i> View Review
+                    </a>
+                </div>
+            </header>
+            
+            <div class="paper-content">
+                {{ content }}
+            </div>
+            
+            <footer class="paper-footer">
+                <p>
+                    <strong>Citation:</strong><br>
+                    Author(s). "{{ page.title }}". <em>Computational Economic Notes</em>. 
+                    Paper {{ page.paper_id }}. Published {{ page.date | date: "%B %d, %Y" }}.
+                </p>
+                <p>
+                    <small>
+                        This paper was peer-reviewed via GitHub Issues. 
+                        <a href="https://github.com/CompEcoNote/Computational-Economic-Notes/issues/{{ page.paper_id }}">
+                            View review discussion
+                        </a>.
+                    </small>
+                </p>
+            </footer>
+        </article>
+    </main>
+    
+    {% include footer.html %}
+    
+    <script>
+        // Simple PDF viewer toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfLink = document.querySelector('a[href$=".pdf"]');
+            if (pdfLink) {
+                const viewerBtn = document.createElement('a');
+                viewerBtn.href = pdfLink.href;
+                viewerBtn.target = '_blank';
+                viewerBtn.className = 'btn btn-secondary';
+                viewerBtn.innerHTML = '<i class="fas fa-eye"></i> View in Browser';
+                pdfLink.parentNode.insertBefore(viewerBtn, pdfLink.nextSibling);
+            }
+        });
+    </script>
+</body>
+</html>
